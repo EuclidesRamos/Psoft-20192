@@ -1,11 +1,11 @@
-package services;
+package psoft.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import entities.Disciplina;
+import psoft.entities.Disciplina;
 
 @Service
 public class DisciplinaService {
@@ -24,5 +24,7 @@ public class DisciplinaService {
 		return disciplinas.get(id);
 	}
 
-
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
 }

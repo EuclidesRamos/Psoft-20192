@@ -1,6 +1,7 @@
-package entities;
+package psoft.entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+
 
 public class Disciplina {
 	
