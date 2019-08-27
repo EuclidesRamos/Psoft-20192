@@ -1,7 +1,7 @@
 package psoft.controllers;
 
 
-import java.util.List;
+import java.util.Map;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,15 @@ public class DisciplinaController {
 	private DisciplinaService disciplinaService;
 	
 	@PostMapping("/v1/api/disciplinas")
-	public  ResponseEntity<Disciplina> setDisciplina(@PathParam("nome") String nome, @PathParam("nota") double nota) {
-		return new ResponseEntity<Disciplina>(disciplinaService.setDisciplina(nome, nota), HttpStatus.OK);
+	public  ResponseEntity<Disciplina> setDisciplina(@RequestBody Disciplina disciplina) {
+		return new ResponseEntity<Disciplina>(disciplinaService.setDisciplina(disciplina), HttpStatus.OK);
 	}
+
+	// @PathParam("nome") String nome, @PathParam("nota") double nota
+	// @RequestBody Disciplina disciplina
 	
-	@RequestMapping("/v1/api/disciplinas/{id}")
-	public ResponseEntity<Disciplina> getDisciplina(@PathParam("id") int id) {
+	@GetMapping("/v1/api/disciplinas/{id}")
+	public ResponseEntity<Disciplina> getDisciplina(@RequestBody Integer id) {
 		Disciplina disciplina = disciplinaService.getDisciplina(id);
 		if (disciplina != null) {
 			return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);			
@@ -33,8 +36,8 @@ public class DisciplinaController {
 	}
 
 	@GetMapping("/v1/api/disciplinas")
-	public ResponseEntity<List<Disciplina>> getDisciplinas() {
-		return new ResponseEntity<List<Disciplina>>(disciplinaService.getDisciplinas(), HttpStatus.OK);
+	public ResponseEntity<Map<Integer, Disciplina>> getDisciplinas() {
+		return new ResponseEntity<Map<Integer, Disciplina>>(disciplinaService.getDisciplinas(), HttpStatus.OK);
 	}
 
 }

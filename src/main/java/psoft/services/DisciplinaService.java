@@ -1,7 +1,7 @@
 package psoft.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -10,21 +10,21 @@ import psoft.entities.Disciplina;
 @Service
 public class DisciplinaService {
 	
-	private List<Disciplina> disciplinas = new ArrayList<>();
-	private int id = 0;
-	
-	public Disciplina setDisciplina(String nome, double nota) {
-		Disciplina novaDisciplina = new Disciplina(id, nome, nota);
-		disciplinas.add(novaDisciplina);
+	private Map<Integer, Disciplina> disciplinas = new HashMap<>();
+	private Integer id = 0;
+
+	public Disciplina setDisciplina(Disciplina novaDisciplina) {
+		novaDisciplina.setId(id);
+		disciplinas.put(id, novaDisciplina);
 		id++;
 		return novaDisciplina;
 	}
 	
-	public Disciplina getDisciplina(int id) {
+	public Disciplina getDisciplina(Integer id) {
 		return disciplinas.get(id);
 	}
 
-	public List<Disciplina> getDisciplinas() {
+	public Map<Integer, Disciplina> getDisciplinas() {
 		return disciplinas;
 	}
 }
