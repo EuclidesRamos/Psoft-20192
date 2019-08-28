@@ -32,4 +32,7 @@ public class Disciplina {
 		return this.nota;
 	}
 
+    public void setNome(String nome) {
+		this.nome = nome;
+    }
 }

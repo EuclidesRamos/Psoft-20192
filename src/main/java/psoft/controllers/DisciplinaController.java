@@ -27,8 +27,8 @@ public class DisciplinaController {
 	// @RequestBody Disciplina disciplina
 	
 	@GetMapping("/v1/api/disciplinas/{id}")
-	public ResponseEntity<Disciplina> getDisciplina(@RequestBody Integer id) {
-		Disciplina disciplina = disciplinaService.getDisciplina(id);
+	public ResponseEntity<Disciplina> getDisciplina(@PathVariable("id") String id) {
+		Disciplina disciplina = disciplinaService.getDisciplina(Integer.parseInt(id));
 		if (disciplina != null) {
 			return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);			
 		}
@@ -38,6 +38,15 @@ public class DisciplinaController {
 	@GetMapping("/v1/api/disciplinas")
 	public ResponseEntity<Map<Integer, Disciplina>> getDisciplinas() {
 		return new ResponseEntity<Map<Integer, Disciplina>>(disciplinaService.getDisciplinas(), HttpStatus.OK);
+	}
+
+	@PutMapping("/v1/api/disciplinas/{id}")
+	public ResponseEntity<Disciplina> atualizaDisciplina(@PathVariable("id") String id, @RequestBody String novoNome) {
+		Disciplina disciplina = disciplinaService.atualizaDisciplina(Integer.parseInt(id), novoNome);
+		if (disciplina != null) {
+			return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);
+		}
+		return new ResponseEntity<Disciplina>(HttpStatus.NOT_FOUND);
 	}
 
 }

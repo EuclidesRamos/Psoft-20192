@@ -3,6 +3,7 @@ package psoft.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import psoft.entities.Disciplina;
@@ -26,5 +27,10 @@ public class DisciplinaService {
 
 	public Map<Integer, Disciplina> getDisciplinas() {
 		return disciplinas;
+	}
+
+	public Disciplina atualizaDisciplina(int id, String novoNome) {
+		disciplinas.get(id).setNome(novoNome);
+		return disciplinas.get(id);
 	}
 }
