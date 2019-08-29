@@ -3,7 +3,7 @@ package psoft.entities;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
-public class Disciplina {
+public class Disciplina implements Comparable<Disciplina> {
 
 	private Integer id;
 	private String nome;
@@ -34,5 +34,17 @@ public class Disciplina {
 
     public void setNome(String nome) {
 		this.nome = nome;
+    }
+
+    public void setNota(double nota) {
+	    this.nota = nota;
+    }
+
+    @Override
+    public int compareTo(Disciplina object) {
+	    if (this.nota > object.getNota()) {
+	        return -1;
+        }
+	    return 1;
     }
 }

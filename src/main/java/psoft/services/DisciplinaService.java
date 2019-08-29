@@ -1,7 +1,6 @@
 package psoft.services;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,8 +28,28 @@ public class DisciplinaService {
 		return disciplinas;
 	}
 
-	public Disciplina atualizaDisciplina(int id, String novoNome) {
+	public Disciplina atualizaDisciplina(Integer id, String novoNome) {
 		disciplinas.get(id).setNome(novoNome);
 		return disciplinas.get(id);
 	}
+
+	public Disciplina atualizaNota(Integer id, double novaNota) {
+	    disciplinas.get(id).setNota(novaNota);
+	    return disciplinas.get(id);
+    }
+
+    public Disciplina removeDisciplina(Integer id) {
+	    if (disciplinas.containsKey(id)) {
+	        Disciplina disciplina = disciplinas.get(id);
+	        disciplinas.remove(id);
+	        return disciplina;
+        }
+	    return null;
+	}
+
+    public List<Disciplina> ranking() {
+	    List<Disciplina> todasDisciplinas = new ArrayList<Disciplina>(disciplinas.values());
+	    Collections.sort(todasDisciplinas);
+	    return todasDisciplinas;
+    }
 }
