@@ -1,6 +1,7 @@
 # Psoft-20192
 
 ### 💻 Destinado às atividades desenvolvidas durante o curso de Projeto de Software - 2019.2
+#### Universidade Federal de Campina Grande
 
 ## Laboratório 1
 Especificações sobre o backend [aqui](https://docs.google.com/document/d/e/2PACX-1vQYsle9B363IU3oDw6hJxn9diVd9-yLOUfCLFQCQehRkf4195xmaY5wjWHOQXGHTRkiv_j0Kfc-qFQq/pub). by @RaquelLopes
