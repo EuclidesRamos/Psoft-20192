@@ -1,28 +1,43 @@
 package lab2.psoft.Services;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lab2.psoft.Dao.DisciplinaRepository;
 import lab2.psoft.Entities.Disciplina;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @Service
 public class DisciplinaService {
 
-    private Map<Integer, Disciplina> disciplinas = new HashMap<>();
-    private Integer id = 0;
+    private DisciplinaRepository disciplinasDAO;
+    private Long id;
+
+    public DisciplinaService(DisciplinaRepository<Disciplina, long> disciplinasDAO) {
+        this.disciplinasDAO = disciplinasDAO;
+        this.id = new Long(0);
+    }
 
     public void initDisciplina() {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<Disciplina>> typeReference = new TypeReference<List<Disciplina>>(){};
+        InputStream inputStream = ObjectMapper.class.getResourceAsStream("/json/disciplinas.json");
+        try {
+            List<Disciplina> disciplinas = mapper.readValue(inputStream, typeReference);
+            this.disciplinasDAO.saveAll(disciplinas);
+        } catch (IOException e) {
+            System.out.println("Não foi possível salvar os alunos: " + e.getMessage());
+        }
     }
 
     public Disciplina setDisciplina(Disciplina novaDisciplina) {
         novaDisciplina.setId(id);
-        disciplinas.put(id, novaDisciplina);
         id++;
-        return novaDisciplina;
+        return disciplinasDAO.save(novaDisciplina);
     }
 
     public Disciplina getDisciplina(Integer id) {

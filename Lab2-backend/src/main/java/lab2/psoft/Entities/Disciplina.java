@@ -2,16 +2,25 @@ package lab2.psoft.Entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Disciplina implements Comparable<Disciplina> {
 
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String nome;
     private double nota;
     private String comentarios;
     private int likes;
 
-    @JsonCreator
-    public Disciplina(long id, String nome, double nota, String comentarios, int likes) {
+    public Disciplina() {
+        super();
+    }
+
+    public Disciplina(Long id, String nome, double nota, String comentarios, int likes) {
         this.id = id;
         this.nome = nome;
         this.nota = nota;
@@ -19,7 +28,7 @@ public class Disciplina implements Comparable<Disciplina> {
         this.likes = likes;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
