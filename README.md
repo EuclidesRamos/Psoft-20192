@@ -11,7 +11,10 @@ Especificações sobre o backend [aqui](https://docs.google.com/document/d/e/2PA
 - [X] Exibir Disciplinas do Sistema
 - [X] Adicionar Disciplinas ao Sistema
 - [X] Deletar Disciplinas do Sistema
-##
 
+## Laboratório 2
+Especificações sobre o backend [aqui](https://raquelvl.github.io/psoft/aulas/lab2_backend.html). by @RaquelLopes
+<p><i>[em andamento]</i></p>
 
+  
 <p><i>Author: @EuclidesRamos</i></p>
