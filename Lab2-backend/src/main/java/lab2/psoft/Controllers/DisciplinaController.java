@@ -51,7 +51,7 @@ public class DisciplinaController {
     }
     
     @PutMapping("/v1/api/disciplinas/comentarios/{id}")
-    public ResponseEntity<Disciplina> atualizaDisciplinaComentarios(@PathVariable("id") String id, @PathVariable("comentario") String comentario) {
+    public ResponseEntity<Disciplina> atualizaDisciplinaComentarios(@PathVariable("id") String id, @RequestBody String comentario) {
         Disciplina disciplina = disciplinaService.atualizaComentarios(Long.parseLong(id), comentario);
         if (disciplina != null) {
             return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);
@@ -59,9 +59,14 @@ public class DisciplinaController {
         return new ResponseEntity<Disciplina>(HttpStatus.NOT_FOUND);
     }
     
-    @GetMapping("/v1/api/disciplinas/ranking")
+    @GetMapping("/v1/api/disciplinas/ranking/likes")
     public ResponseEntity<List<Disciplina>> rankingDisciplinas() {
         return new ResponseEntity<List<Disciplina>>(disciplinaService.ranking(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/v1/api/disciplinas/ranking/likes")
+    public ResponseEntity<List<Disciplina>> rankingDisciplinas() {
+        return new ResponseEntity<List<Disciplina>>(disciplinaService.rankingPorLikes(), HttpStatus.OK);
     }
 
 }

@@ -85,7 +85,7 @@ public class DisciplinaService {
 		return this.disciplinasDAO.getOne(id);
 	}
 
-	public List<Disciplina> ranking() {
+	public List<Disciplina> rankingPorLikes() {
 		List<Disciplina> disciplinas = this.disciplinasDAO.findAll();
 		Collections.sort(disciplinas);
 		return disciplinas;
