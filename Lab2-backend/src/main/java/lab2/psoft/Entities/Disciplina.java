@@ -1,15 +1,15 @@
 package lab2.psoft.Entities;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Entity
 public class Disciplina implements Comparable<Disciplina> {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     private String nome;
     private double nota;
@@ -26,10 +26,6 @@ public class Disciplina implements Comparable<Disciplina> {
         this.nota = nota;
         this.comentarios = comentarios;
         this.likes = likes;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public long getId() {
@@ -52,6 +48,10 @@ public class Disciplina implements Comparable<Disciplina> {
         return this.likes;
     }
 
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -70,7 +70,7 @@ public class Disciplina implements Comparable<Disciplina> {
 
     @Override
     public int compareTo(Disciplina object) {
-        if (this.nota > object.getNota()) {
+        if (this.likes > object.getLikes()) {
             return -1;
         }
         return 1;

@@ -14,7 +14,9 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping("/v1/auth/usuarios")
-    public ResponseEntity<Usuario> setDisciplina(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> setUsuario(@RequestBody Usuario usuario) {
         return new ResponseEntity<Usuario>(usuarioService.setUsuario(usuario), HttpStatus.OK);
     }
+
+    
 }

@@ -5,73 +5,90 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lab2.psoft.Dao.DisciplinaRepository;
 import lab2.psoft.Entities.Disciplina;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class DisciplinaService {
 
-    private DisciplinaRepository disciplinasDAO;
-    private Long id;
+	@Autowired
+    private DisciplinaRepository<Disciplina, Long> disciplinasDAO;
+    private long id = 0;
 
-    public DisciplinaService(DisciplinaRepository<Disciplina, long> disciplinasDAO) {
+    public DisciplinaService(DisciplinaRepository<Disciplina, Long> disciplinasDAO) {
         this.disciplinasDAO = disciplinasDAO;
-        this.id = new Long(0);
     }
 
+    @PostConstruct
     public void initDisciplina() {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<Disciplina>> typeReference = new TypeReference<List<Disciplina>>(){};
         InputStream inputStream = ObjectMapper.class.getResourceAsStream("/json/disciplinas.json");
         try {
             List<Disciplina> disciplinas = mapper.readValue(inputStream, typeReference);
-            this.disciplinasDAO.saveAll(disciplinas);
+            for (Disciplina d: disciplinas) {
+            	this.setDisciplina(d);
+            }
+            
         } catch (IOException e) {
-            System.out.println("Não foi possível salvar os alunos: " + e.getMessage());
+            System.out.println("Não foi possível salvar as disciplinas: " + e.getMessage());
         }
     }
 
     public Disciplina setDisciplina(Disciplina novaDisciplina) {
         novaDisciplina.setId(id);
         id++;
-        return disciplinasDAO.save(novaDisciplina);
+        return this.disciplinasDAO.save(novaDisciplina);
     }
 
-    public Disciplina getDisciplina(Integer id) {
-        return disciplinas.get(id);
+    public Disciplina getDisciplina(long id) {
+        return this.disciplinasDAO.getOne(id);
     }
 
-    public Map<Integer, Disciplina> getDisciplinas() {
-        return disciplinas;
+    public List<Disciplina> getDisciplinas() {
+        return this.disciplinasDAO.findAll();
     }
 
-    public Disciplina atualizaDisciplina(Integer id, String novoNome) {
-        disciplinas.get(id).setNome(novoNome);
-        return disciplinas.get(id);
+    public Disciplina atualizaDisciplina(long id, String novoNome) {
+    	this.disciplinasDAO.getOne(id).setNome(novoNome);
+        return this.disciplinasDAO.getOne(id);
     }
 
-    public Disciplina atualizaNota(Integer id, double novaNota) {
-        disciplinas.get(id).setNota(novaNota);
-        return disciplinas.get(id);
+    public Disciplina atualizaNota(long id, double novaNota) {
+        this.disciplinasDAO.getOne(id).setNota(novaNota);
+        return this.disciplinasDAO.getOne(id);
     }
 
-    public Disciplina removeDisciplina(Integer id) {
-        if (disciplinas.containsKey(id)) {
-            Disciplina disciplina = disciplinas.get(id);
-            disciplinas.remove(id);
+    public Disciplina removeDisciplina(long id) {
+        if (this.disciplinasDAO.existsById(id)) {
+            Disciplina disciplina = this.disciplinasDAO.getOne(id);
+            this.disciplinasDAO.deleteById(id);;
             return disciplina;
         }
         return null;
     }
 
-    public List<Disciplina> ranking() {
-        List<Disciplina> todasDisciplinas = new ArrayList<Disciplina>(disciplinas.values());
-        Collections.sort(todasDisciplinas);
-        return todasDisciplinas;
-    }
+	public Disciplina atualizaLikes(long id) {
+		this.disciplinasDAO.getOne(id).setLikes();
+		return this.disciplinasDAO.getOne(id);
+	}
 
+	public Disciplina atualizaComentarios(long parseLong, String novoComentario) {
+		this.disciplinasDAO.getOne(id).setComentario(novoComentario);
+		return this.disciplinasDAO.getOne(id);
+	}
+
+	public List<Disciplina> ranking() {
+		List<Disciplina> disciplinas = this.disciplinasDAO.findAll();
+		Collections.sort(disciplinas);
+		return disciplinas;
+	}
 
 }

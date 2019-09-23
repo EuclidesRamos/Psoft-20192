@@ -8,8 +8,7 @@ public class UsuarioService {
 
     }
 
-
     public Usuario setUsuario(Usuario usuario) {
-
+    	return null;
     }
 }
