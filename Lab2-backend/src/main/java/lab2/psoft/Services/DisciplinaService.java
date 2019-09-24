@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lab2.psoft.Dao.DisciplinaRepository;
 import lab2.psoft.Entities.Disciplina;
 
+import lab2.psoft.util.OrdenaPorLikes;
+import lab2.psoft.util.OrdenaPorNota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,37 +35,36 @@ public class DisciplinaService {
         InputStream inputStream = ObjectMapper.class.getResourceAsStream("/json/disciplinas.json");
         try {
             List<Disciplina> disciplinas = mapper.readValue(inputStream, typeReference);
-            for (Disciplina d: disciplinas) {
-            	this.setDisciplina(d);
-            }
-            
+            this.disciplinasDAO.saveAll(disciplinas);
         } catch (IOException e) {
             System.out.println("Não foi possível salvar as disciplinas: " + e.getMessage());
         }
     }
 
     public Disciplina setDisciplina(Disciplina novaDisciplina) {
-        novaDisciplina.setId(id);
-        id++;
         return this.disciplinasDAO.save(novaDisciplina);
     }
 
-    public Disciplina getDisciplina(long id) {
-        return this.disciplinasDAO.getOne(id);
+    public Optional<Disciplina> getDisciplina(long id) {
+        return this.disciplinasDAO.findById(id);
     }
 
     public List<Disciplina> getDisciplinas() {
         return this.disciplinasDAO.findAll();
     }
 
-    public Disciplina atualizaDisciplina(long id, String novoNome) {
-    	this.disciplinasDAO.getOne(id).setNome(novoNome);
-        return this.disciplinasDAO.getOne(id);
+    public Optional<Disciplina> atualizaDisciplina(long id, String novoNome) {
+        if (this.disciplinasDAO.findById(id).isPresent()) {
+            this.disciplinasDAO.findById(id).get().setNome(novoNome);
+        }
+        return this.disciplinasDAO.findById(id);
     }
 
-    public Disciplina atualizaNota(long id, double novaNota) {
-        this.disciplinasDAO.getOne(id).setNota(novaNota);
-        return this.disciplinasDAO.getOne(id);
+    public Optional<Disciplina> atualizaNota(long id, double novaNota) {
+        if (this.disciplinasDAO.findById(id).isPresent()) {
+            this.disciplinasDAO.findById(id).get().setNota(novaNota);
+        }
+        return this.disciplinasDAO.findById(id);
     }
 
     public Disciplina removeDisciplina(long id) {
@@ -75,20 +76,31 @@ public class DisciplinaService {
         return null;
     }
 
-	public Disciplina atualizaLikes(long id) {
-		this.disciplinasDAO.getOne(id).setLikes();
-		return this.disciplinasDAO.getOne(id);
+	public Optional<Disciplina> atualizaLikes(long id) {
+        if (this.disciplinasDAO.findById(id).isPresent()) {
+            this.disciplinasDAO.findById(id).get().setLikes();
+        }
+        return this.disciplinasDAO.findById(id);
 	}
 
-	public Disciplina atualizaComentarios(long parseLong, String novoComentario) {
-		this.disciplinasDAO.getOne(id).setComentario(novoComentario);
-		return this.disciplinasDAO.getOne(id);
+	public Optional<Disciplina> atualizaComentarios(long id, String novoComentario) {
+        if (this.disciplinasDAO.findById(id).isPresent()) {
+            this.disciplinasDAO.findById(id).get().setComentario(novoComentario);
+        }
+        return this.disciplinasDAO.findById(id);
 	}
 
 	public List<Disciplina> rankingPorLikes() {
 		List<Disciplina> disciplinas = this.disciplinasDAO.findAll();
-		Collections.sort(disciplinas);
+		Comparator<Disciplina> estrategia = new OrdenaPorLikes();
+		Collections.sort(disciplinas, estrategia);
 		return disciplinas;
 	}
 
+    public List<Disciplina> rankingPorNotas() {
+        List<Disciplina> disciplinas = this.disciplinasDAO.findAll();
+        Comparator<Disciplina> estrategia = new OrdenaPorNota();
+        Collections.sort(disciplinas, estrategia);
+        return disciplinas;
+    }
 }

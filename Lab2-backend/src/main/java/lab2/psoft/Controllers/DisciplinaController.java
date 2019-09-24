@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class DisciplinaController {
@@ -18,54 +19,54 @@ public class DisciplinaController {
 	@Autowired
     private DisciplinaService disciplinaService;
 
-    @GetMapping("/v1/api/disciplinas/{id}")
+    @GetMapping("/api/disciplinas/{id}")
     public ResponseEntity<Disciplina> getDisciplina(@PathVariable("id") String id) {
-        Disciplina disciplina = disciplinaService.getDisciplina(Long.parseLong(id));
-        if (disciplina != null) {
-            return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);
+        Optional<Disciplina> disciplina = disciplinaService.getDisciplina(Long.parseLong(id));
+        if (disciplina.isPresent()) {
+            return new ResponseEntity<Disciplina>(disciplina.get(), HttpStatus.OK);
         }
         return new ResponseEntity<Disciplina>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/v1/api/disciplinas")
+    @GetMapping("/api/disciplinas")
     public ResponseEntity<List<Disciplina>> getDisciplinas() {
         return new ResponseEntity<List<Disciplina>>(disciplinaService.getDisciplinas(), HttpStatus.OK);
     }
 
-    @PutMapping("/v1/api/disciplinas/nota/{id}")
+    @PutMapping("/api/disciplinas/nota/{id}")
     public ResponseEntity<Disciplina> atualizaDisciplinaNota(@PathVariable("id") String id, @RequestBody String novaNota) {
-        Disciplina disciplina = disciplinaService.atualizaNota(Long.parseLong(id), Double.parseDouble(novaNota));
-        if (disciplina != null) {
-            return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);
+        Optional<Disciplina> disciplina = disciplinaService.atualizaNota(Long.parseLong(id), Double.parseDouble(novaNota));
+        if (disciplina.isPresent()) {
+            return new ResponseEntity<Disciplina>(disciplina.get(), HttpStatus.OK);
         }
         return new ResponseEntity<Disciplina>(HttpStatus.NOT_FOUND);
     }
     
-    @PutMapping("/v1/api/disciplinas/likes/{id}")
+    @PutMapping("/api/disciplinas/likes/{id}")
     public ResponseEntity<Disciplina> atualizaDisciplinaLikes(@PathVariable("id") String id) {
-        Disciplina disciplina = disciplinaService.atualizaLikes(Long.parseLong(id));
-        if (disciplina != null) {
-            return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);
+        Optional<Disciplina>  disciplina = disciplinaService.atualizaLikes(Long.parseLong(id));
+        if (disciplina.isPresent()) {
+            return new ResponseEntity<Disciplina>(disciplina.get(), HttpStatus.OK);
         }
         return new ResponseEntity<Disciplina>(HttpStatus.NOT_FOUND);
     }
     
-    @PutMapping("/v1/api/disciplinas/comentarios/{id}")
+    @PutMapping("/api/disciplinas/comentarios/{id}")
     public ResponseEntity<Disciplina> atualizaDisciplinaComentarios(@PathVariable("id") String id, @RequestBody String comentario) {
-        Disciplina disciplina = disciplinaService.atualizaComentarios(Long.parseLong(id), comentario);
-        if (disciplina != null) {
-            return new ResponseEntity<Disciplina>(disciplina, HttpStatus.OK);
+        Optional<Disciplina>  disciplina = disciplinaService.atualizaComentarios(Long.parseLong(id), comentario);
+        if (disciplina.isPresent()) {
+            return new ResponseEntity<Disciplina>(disciplina.get(), HttpStatus.OK);
         }
         return new ResponseEntity<Disciplina>(HttpStatus.NOT_FOUND);
     }
     
-    @GetMapping("/v1/api/disciplinas/ranking/likes")
-    public ResponseEntity<List<Disciplina>> rankingDisciplinas() {
-        return new ResponseEntity<List<Disciplina>>(disciplinaService.ranking(), HttpStatus.OK);
+    @GetMapping("/api/disciplinas/ranking/notas")
+    public ResponseEntity<List<Disciplina>> rankingDisciplinasPorNotas() {
+        return new ResponseEntity<List<Disciplina>>(disciplinaService.rankingPorNotas(), HttpStatus.OK);
     }
     
     @GetMapping("/v1/api/disciplinas/ranking/likes")
-    public ResponseEntity<List<Disciplina>> rankingDisciplinas() {
+    public ResponseEntity<List<Disciplina>> rankingDisciplinasPorLikes() {
         return new ResponseEntity<List<Disciplina>>(disciplinaService.rankingPorLikes(), HttpStatus.OK);
     }
 
