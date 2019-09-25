@@ -22,5 +22,6 @@ public class UsuarioController {
     public ResponseEntity<Usuario> autenticaUsuario(@RequestBody Usuario usuario) {
         return new ResponseEntity<Usuario>(usuarioService.autenticaUsuario(usuario), HttpStatus.OK);
     }
-
+    
+    
 }

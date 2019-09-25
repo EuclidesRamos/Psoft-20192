@@ -18,6 +18,7 @@ public class Disciplina implements Comparable<Disciplina> {
 
     public Disciplina() {
         super();
+        this.comentarios = "";
     }
 
     public Disciplina(Long id, String nome, double nota, String comentarios, int likes) {
@@ -61,7 +62,7 @@ public class Disciplina implements Comparable<Disciplina> {
     }
 
     public void setComentario(String novoComentario) {
-        this.comentarios += System.lineSeparator() + novoComentario;
+        this.comentarios += (novoComentario + System.lineSeparator());
     }
 
     public void setLikes() {

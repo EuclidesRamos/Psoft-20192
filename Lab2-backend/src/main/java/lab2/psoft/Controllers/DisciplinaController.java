@@ -34,8 +34,8 @@ public class DisciplinaController {
     }
 
     @PutMapping("/api/disciplinas/nota/{id}")
-    public ResponseEntity<Disciplina> atualizaDisciplinaNota(@PathVariable("id") String id, @RequestBody String novaNota) {
-        Optional<Disciplina> disciplina = disciplinaService.atualizaNota(Long.parseLong(id), Double.parseDouble(novaNota));
+    public ResponseEntity<Disciplina> atualizaDisciplinaNota(@PathVariable("id") String id, @RequestBody Disciplina disciplinaNota) {
+        Optional<Disciplina> disciplina = disciplinaService.atualizaNota(Long.parseLong(id), disciplinaNota.getNota());
         if (disciplina.isPresent()) {
             return new ResponseEntity<Disciplina>(disciplina.get(), HttpStatus.OK);
         }
@@ -52,8 +52,8 @@ public class DisciplinaController {
     }
     
     @PutMapping("/api/disciplinas/comentarios/{id}")
-    public ResponseEntity<Disciplina> atualizaDisciplinaComentarios(@PathVariable("id") String id, @RequestBody String comentario) {
-        Optional<Disciplina>  disciplina = disciplinaService.atualizaComentarios(Long.parseLong(id), comentario);
+    public ResponseEntity<Disciplina> atualizaDisciplinaComentarios(@PathVariable("id") String id, @RequestBody Disciplina disciplinaComentario) {
+        Optional<Disciplina>  disciplina = disciplinaService.atualizaComentarios(Long.parseLong(id), disciplinaComentario.getComentarios());
         if (disciplina.isPresent()) {
             return new ResponseEntity<Disciplina>(disciplina.get(), HttpStatus.OK);
         }

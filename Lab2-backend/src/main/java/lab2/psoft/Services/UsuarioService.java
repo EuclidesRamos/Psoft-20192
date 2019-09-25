@@ -2,6 +2,9 @@ package lab2.psoft.Services;
 
 import lab2.psoft.Dao.UsuarioRepository;
 import lab2.psoft.Entities.Usuario;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UsuarioService {
@@ -14,8 +17,7 @@ public class UsuarioService {
     }
 
     public Usuario setUsuario(Usuario usuario) {
-    	this.usuarioDAO.save(usuario);
-    	return usuario;
+    	return this.usuarioDAO.save(usuario);
     }
 
     public Usuario autenticaUsuario(Usuario usuario) {
@@ -27,6 +29,11 @@ public class UsuarioService {
             return null;
         }
     }
+
+	public Optional<Usuario> getUsuario(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

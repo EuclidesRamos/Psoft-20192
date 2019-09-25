@@ -22,9 +22,9 @@ public class DisciplinaService {
 
 	@Autowired
     private DisciplinaRepository<Disciplina, Long> disciplinasDAO;
-    private long id = 0;
 
     public DisciplinaService(DisciplinaRepository<Disciplina, Long> disciplinasDAO) {
+    	super();
         this.disciplinasDAO = disciplinasDAO;
     }
 
@@ -53,54 +53,42 @@ public class DisciplinaService {
         return this.disciplinasDAO.findAll();
     }
 
-    public Optional<Disciplina> atualizaDisciplina(long id, String novoNome) {
-        if (this.disciplinasDAO.findById(id).isPresent()) {
-            this.disciplinasDAO.findById(id).get().setNome(novoNome);
-        }
-        return this.disciplinasDAO.findById(id);
-    }
-
     public Optional<Disciplina> atualizaNota(long id, double novaNota) {
-        if (this.disciplinasDAO.findById(id).isPresent()) {
-            this.disciplinasDAO.findById(id).get().setNota(novaNota);
+    	Optional<Disciplina> disciplina = this.disciplinasDAO.findById(id);
+		if (disciplina.isPresent()) {
+            disciplina.get().setNota(novaNota);
+            this.disciplinasDAO.save(disciplina.get());
         }
-        return this.disciplinasDAO.findById(id);
-    }
-
-    public Disciplina removeDisciplina(long id) {
-        if (this.disciplinasDAO.existsById(id)) {
-            Disciplina disciplina = this.disciplinasDAO.getOne(id);
-            this.disciplinasDAO.deleteById(id);;
-            return disciplina;
-        }
-        return null;
+        return disciplina;
     }
 
 	public Optional<Disciplina> atualizaLikes(long id) {
-        if (this.disciplinasDAO.findById(id).isPresent()) {
-            this.disciplinasDAO.findById(id).get().setLikes();
+		Optional<Disciplina> disciplina = this.disciplinasDAO.findById(id);
+		if (disciplina.isPresent()) {
+            disciplina.get().setLikes();;
+            this.disciplinasDAO.save(disciplina.get());
         }
-        return this.disciplinasDAO.findById(id);
+        return disciplina;
 	}
 
 	public Optional<Disciplina> atualizaComentarios(long id, String novoComentario) {
-        if (this.disciplinasDAO.findById(id).isPresent()) {
-            this.disciplinasDAO.findById(id).get().setComentario(novoComentario);
+		Optional<Disciplina> disciplina = this.disciplinasDAO.findById(id);
+		if (disciplina.isPresent()) {
+            disciplina.get().setComentario(novoComentario);
+            this.disciplinasDAO.save(disciplina.get());
         }
-        return this.disciplinasDAO.findById(id);
+        return disciplina;
 	}
 
 	public List<Disciplina> rankingPorLikes() {
 		List<Disciplina> disciplinas = this.disciplinasDAO.findAll();
-		Comparator<Disciplina> estrategia = new OrdenaPorLikes();
-		Collections.sort(disciplinas, estrategia);
+		Collections.sort(disciplinas, new OrdenaPorLikes());
 		return disciplinas;
 	}
 
     public List<Disciplina> rankingPorNotas() {
         List<Disciplina> disciplinas = this.disciplinasDAO.findAll();
-        Comparator<Disciplina> estrategia = new OrdenaPorNota();
-        Collections.sort(disciplinas, estrategia);
+        Collections.sort(disciplinas, new OrdenaPorNota());
         return disciplinas;
     }
 }
