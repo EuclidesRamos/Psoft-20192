@@ -18,7 +18,7 @@ public class UsuarioController {
         return new ResponseEntity<Usuario>(usuarioService.setUsuario(usuario), HttpStatus.OK);
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/Filters/login")
     public ResponseEntity<Usuario> autenticaUsuario(@RequestBody Usuario usuario) {
         return new ResponseEntity<Usuario>(usuarioService.autenticaUsuario(usuario), HttpStatus.OK);
     }
