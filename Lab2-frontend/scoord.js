@@ -11,8 +11,8 @@ function disciplina(id, nome, creditos, preRequisitos) {
 		id: () => _id,
 		get_nome: () => _nome,
 		creditos: creditos,
-		preRequisitos: preRequisitos,
-		set_nome: (novoNome) => _nome = nome
+		pre_requisitos: preRequisitos,
+		set_nome: (novoNome) => _nome = novoNome
 	};
 };
 

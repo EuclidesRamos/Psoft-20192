@@ -77,6 +77,6 @@ describe('factory Turma', function () {
   });
 
   it('deve permitir matricular estudante', function () {
-      
+     t0.matricular_estudante() 
   });
 });
