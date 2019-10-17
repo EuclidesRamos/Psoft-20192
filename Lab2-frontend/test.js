@@ -1,6 +1,8 @@
 let assert = require('assert');
 let disciplina = require('./scoord').disciplina;
 let turma = require('./scoord').turma;
+let estudante = require('./scoord').estudante;
+let professor = require('./scoord').professor;
 
 describe('factory Disciplina', function() {
   let d0;
@@ -80,7 +82,7 @@ describe('factory Turma', function () {
 
   it('deve permitir matricular estudante', function () {
       t0.matricular_estudante(e0);
-      assert.equal(e0.get_matricula(), t0.get_estudantes()[0]); 
+      assert.equal(e0.get_matricula(), t0.get_estudantes()[0].get_matricula()); 
   });
 
   it('não deve permitir matricular estudante já cadastrado', function () {
@@ -138,7 +140,7 @@ describe('factory Professor', function () {
 
   it('deve permitir alocar turma', function () {
       p0.aloca_turma(t0);
-      assert.equal('prog1', p0.turmas('1')[0]);
+      assert.equal('prog1', p0.turmas('1')[0].get_disciplina());
   })
 
   it('deve permitir a filtragem de busca das turmas pelo período', function () {
@@ -187,7 +189,7 @@ describe('factory Estudante', function () {
 
   it('deve permitir alocar turma', function () {
       e0.aloca_turma(t0);
-      assert.equal('prog1', e0.turmas('1')[0]);
+      assert.equal('prog1', e0.turmas('1')[0].get_disciplina());
   })
 
   it('deve permitir a filtragem de busca das turmas pelo período', function () {

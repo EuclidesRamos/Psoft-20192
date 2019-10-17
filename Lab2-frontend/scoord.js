@@ -28,13 +28,14 @@ function turma(disciplina, periodo) {
 		get_periodo: () => _periodo,
 		get_professor: () => _professor,
 		get_status: () => _status,
+		get_estudantes: () => _estudantes,
 		set_professor: (novoProfessor) => _professor = novoProfessor,
 		matricular_estudante: function (novoEstudante) {
 			if (_status == "concluida") {
-				return "Disciplina já concluída";
+				return "Impossivel matricular estudante, disciplina concluída";
 			} else {
 				_estudantes.forEach((element) => {
-					if (element.getMatricula() == novoEstudante.getMatricula()) {
+					if (element.get_matricula() == novoEstudante.get_matricula()) {
 						return "Aluno ja matriculado";	
 					}
 				});
