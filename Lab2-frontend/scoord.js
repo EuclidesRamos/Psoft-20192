@@ -31,16 +31,16 @@ function turma(disciplina, periodo) {
 		get_estudantes: () => _estudantes,
 		set_professor: (novoProfessor) => _professor = novoProfessor,
 		matricular_estudante: function (novoEstudante) {
-			if (_status == "concluida") {
+			if (_status === "concluida") {
 				return "Impossivel matricular estudante, disciplina concluída";
 			} else {
 				_estudantes.forEach((element) => {
-					if (element.get_matricula() == novoEstudante.get_matricula()) {
-						return "Aluno ja matriculado";	
+					if (element.get_matricula() === novoEstudante.get_matricula()) {
+						return "Estudante ja matriculado";	
 					}
 				});
 				_estudantes.push(novoEstudante);
-				return "Aluno matriculado com sucesso!";
+				return "Estudante matriculado com sucesso!";
 			}
 		},
 		desmatricular_estudante: function (estudante) {
@@ -49,7 +49,7 @@ function turma(disciplina, periodo) {
 			}
 		},
 		set_status: function (novoStatus) {
-			if (novoStatus == "planejada" || novoStatus == "ativa" || novoStatus == "concluida") {
+			if (novoStatus === "planejada" || novoStatus === "ativa" || novoStatus === "concluida") {
 				_status = novoStatus;
 			}
 		}
@@ -75,7 +75,7 @@ function professor(matricula, nome, email, cpf, url_de_foto) {
 		turmas: function (semestre) {
 			turmas.forEach((element, index) => {
 				let result = [];
-				if (element.get_periodo() == semestre) {
+				if (element.get_periodo() === semestre) {
 					result.push(element);
 				}
 				return result;
@@ -100,10 +100,11 @@ function estudante(matricula, nome, email, cpf, url_de_foto) {
 		get_url_de_foto: () => _url_de_foto,
 		set_nome: (novoNome) => _nome = novoNome,
 		matricula: (turma) => turmas.push(turma),
+		aloca_turma: (turma) => turmas.push(turma),
 		turmas: function (semestre) {
 			turmas.forEach((element, index) => {
 				let result = [];
-				if (element.get_periodo() == semestre) {
+				if (element.get_periodo() === semestre) {
 					result.push(element);
 				}
 				return result;

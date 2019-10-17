@@ -86,7 +86,7 @@ describe('factory Turma', function () {
   });
 
   it('não deve permitir matricular estudante já cadastrado', function () {
-      t0.matricular_estudante(e0);
+    //   t0.matricular_estudante(e0);
       assert.equal('Estudante ja matriculado', t0.matricular_estudante(e0));
   });
 
@@ -96,7 +96,7 @@ describe('factory Turma', function () {
   });
 
   it('deve permitir desmatricular estudante', function () {
-      t0.matricular_estudante(e0);
+    //   t0.matricular_estudante(e0);
       t0.desmatricular_estudante(e0);
       assert.deepEqual([], t0.get_estudantes());
   });
