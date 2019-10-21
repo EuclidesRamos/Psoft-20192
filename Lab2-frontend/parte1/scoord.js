@@ -31,16 +31,21 @@ function turma(disciplina, periodo) {
 		get_estudantes: () => _estudantes,
 		set_professor: (novoProfessor) => _professor = novoProfessor,
 		matricular_estudante: function (novoEstudante) {
+			let flag = true;
 			if (_status === "concluida") {
 				return "Impossivel matricular estudante, disciplina concluída";
 			} else {
 				_estudantes.forEach((element) => {
 					if (element.get_matricula() === novoEstudante.get_matricula()) {
-						return "Estudante ja matriculado";	
+						flag = false;	
 					}
 				});
-				_estudantes.push(novoEstudante);
-				return "Estudante matriculado com sucesso!";
+				if (flag) {
+					_estudantes.push(novoEstudante);
+					return "Estudante matriculado com sucesso!";
+				} else {
+					return "Estudante ja matriculado";
+				}
 			}
 		},
 		desmatricular_estudante: function (estudante) {
@@ -73,13 +78,13 @@ function professor(matricula, nome, email, cpf, url_de_foto) {
 		set_nome: (novoNome) => _nome = novoNome,
 		aloca_turma: (turma) => turmas.push(turma),
 		turmas: function (semestre) {
+			let result = [];
 			turmas.forEach((element, index) => {
-				let result = [];
 				if (element.get_periodo() === semestre) {
-					result.push(element);
+					result.push(element.get_disciplina());
 				}
-				return result;
 			});
+			return result;
 		}
 	};
 };
@@ -102,13 +107,13 @@ function estudante(matricula, nome, email, cpf, url_de_foto) {
 		matricula: (turma) => turmas.push(turma),
 		aloca_turma: (turma) => turmas.push(turma),
 		turmas: function (semestre) {
+			let result = [];
 			turmas.forEach((element, index) => {
-				let result = [];
 				if (element.get_periodo() === semestre) {
-					result.push(element);
+					result.push(element.get_disciplina());
 				}
-				return result;
 			});
+			return result;
 		}
 	};
 };

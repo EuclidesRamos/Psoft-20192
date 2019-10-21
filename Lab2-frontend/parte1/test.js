@@ -86,7 +86,6 @@ describe('factory Turma', function () {
   });
 
   it('não deve permitir matricular estudante já cadastrado', function () {
-    //   t0.matricular_estudante(e0);
       assert.equal('Estudante ja matriculado', t0.matricular_estudante(e0));
   });
 
@@ -140,18 +139,17 @@ describe('factory Professor', function () {
 
   it('deve permitir alocar turma', function () {
       p0.aloca_turma(t0);
-      assert.equal('prog1', p0.turmas('1')[0].get_disciplina());
+      assert.equal('prog1', p0.turmas('1')[0]);
   })
 
   it('deve permitir a filtragem de busca das turmas pelo período', function () {
       let t1 = turma('prog2', '2');
       let t2 = turma('ic', '1');
       let t3 = turma('psoft', '4');
-      p0.aloca_turma(t0);
       p0.aloca_turma(t1);
       p0.aloca_turma(t2);
       p0.aloca_turma(t3);
-      assert.deepEqual([t0, t2], p0.turmas('1'));
+      assert.deepEqual([t0.get_disciplina(), t2.get_disciplina()], p0.turmas('1'));
   }) 
 
 });
@@ -189,18 +187,17 @@ describe('factory Estudante', function () {
 
   it('deve permitir alocar turma', function () {
       e0.aloca_turma(t0);
-      assert.equal('prog1', e0.turmas('1')[0].get_disciplina());
+      assert.equal('prog1', e0.turmas('1')[0]);
   })
 
   it('deve permitir a filtragem de busca das turmas pelo período', function () {
       let t1 = turma('prog2', '2');
       let t2 = turma('ic', '1');
       let t3 = turma('psoft', '4');
-      e0.aloca_turma(t0);
       e0.aloca_turma(t1);
       e0.aloca_turma(t2);
       e0.aloca_turma(t3);
-      assert.deepEqual([t0, t2], e0.turmas('1'));
+      assert.deepEqual([t0.get_disciplina(), t2.get_disciplina()], e0.turmas('1'));
   }) 
 
 });
